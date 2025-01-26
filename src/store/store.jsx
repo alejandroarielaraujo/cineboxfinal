@@ -18,7 +18,8 @@ const AppContext = createContext({
 
 export default function Store({children}){
 
-    const [items, setItems] = useState([
+    // Cargar los items desde LocalStorage al iniciar la aplicación
+    const savedItems = JSON.parse(localStorage.getItem('items')) || [
         {
             id: "1",
             title: "Forrest Gump",
@@ -83,15 +84,19 @@ export default function Store({children}){
             director: "Quentin Tarantino",
             review: "Pulp Fiction is a dark, witty crime drama that intertwines multiple stories with sharp dialogue and unforgettable characters, making it a cult classic."            
         },
-    
+    ];
 
+    // Estado de los items, ahora con persistencia en LocalStorage
+    const [items, setItems] = useState(savedItems);
 
-    ]);
+    useEffect(() => {
+        // Guardar en LocalStorage cada vez que cambien los items
+        localStorage.setItem('items', JSON.stringify(items));
+    }, [items]);  // Se ejecuta cada vez que 'items' cambia
 
     function createItem(item){
         const temp = [...items];
         temp.push(item);
-
         setItems(temp);
     }
 
@@ -107,13 +112,11 @@ export default function Store({children}){
         setItems(updatedItems);
     }
 
-    // Función para eliminar un libro
     function deleteItem(id) {
-        const filteredItems = items.filter((item) => item.id !== id); // Filtrar el libro por ID
-        setItems(filteredItems); // Actualizar el estado con los libros restantes
+        const filteredItems = items.filter((item) => item.id !== id); // Filtrar el item por ID
+        setItems(filteredItems); // Actualizar el estado con los items restantes
     }
 
-    // return <div>{children}</div>
     return (
         <AppContext.Provider
             value={{
@@ -121,13 +124,14 @@ export default function Store({children}){
                 createItem,
                 getItem,
                 updateItem,
-                deleteItem, // Exponer la función deleteItem
+                deleteItem,
             }}
         >
             {children}
         </AppContext.Provider>
     );
 }
+
 export function useAppContext(){
     return useContext(AppContext);
 }
