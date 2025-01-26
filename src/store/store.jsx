@@ -7,7 +7,6 @@ import TheWolfOfWallStreet from '../img/thewolfofwallstreet.jpg';
 import Zohan from '../img/youdontmesswiththezohan.jpg';
 import PridePrejudice from '../img/pride-and-prejudice.jpg';
 import PulpFiction from '../img/Pulp_Fiction.jpg';
-import Gladiator from '../img/Gladiator.jpg';
 
 const AppContext = createContext({
     items: [],
@@ -84,14 +83,7 @@ export default function Store({children}){
             director: "Quentin Tarantino",
             review: "Pulp Fiction is a dark, witty crime drama that intertwines multiple stories with sharp dialogue and unforgettable characters, making it a cult classic."            
         },
-        {
-            id: "9",
-            title: "Gladiator",
-            genre: "Action",
-            cover: Gladiator,
-            director: "Ridley Scott",
-            review: "Gladiator is a thrilling, powerful film with unforgettable performances, especially from Russell Crowe. A timeless story of revenge and honor."            
-        }
+    
 
 
     ]);
